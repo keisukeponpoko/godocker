@@ -6,6 +6,7 @@ require 'sinatra'
 require 'sinatra/reloader'
 require 'grpc'
 require 'helloworld_services_pb'
+require "net/http"
 
 get '/' do
   "no world"
@@ -20,11 +21,19 @@ get '/service/ruby' do
 end
 
 get '/grpc' do
-  stub = Helloworld::Greeter::Stub.new('host.docker.internal:50051', :this_channel_is_insecure)
+  stub = Helloworld::Greeter::Stub.new('localhost:5000', :this_channel_is_insecure)
   message = stub.say_hello_world(Helloworld::HelloRequest.new(name: 'sekai')).message
   "Greeting: #{message}"
 end
 
-get '/hi' do
-  "hi world"
+get '/grpc2' do
+  stub = Helloworld::Greeter::Stub.new('localhost:8080', :this_channel_is_insecure)
+  message = stub.say_hello_world(Helloworld::HelloRequest.new(name: 'sekai')).message
+  "Greeting: #{message}"
+end
+
+get '/ruby' do
+  uri = URI.parse("http://localhost:5000/service/ruby")
+  response = Net::HTTP.get_response(uri)
+  response.body
 end

@@ -17,6 +17,7 @@ down:
 .PHONY: build
 build:
 	docker build -t eks/ruby:latest ruby
+	docker build -t eks/grpc-ruby:latest ruby_grpc
 	docker build -t eks/go:latest go
 
 .PHONY: apply
@@ -26,9 +27,10 @@ apply:
 	kubectl apply -f .kube/front-envoy-service.yaml
 	kubectl apply -f .kube/go.yaml
 	kubectl apply -f .kube/go-service.yaml
-	kubectl apply -f .kube/go-ruby.yaml
-	kubectl apply -f .kube/go-ruby-service.yaml
-	# kubectl apply -f .kube/ruby-service.yaml
+	# kubectl apply -f .kube/go-ruby.yaml
+	# kubectl apply -f .kube/go-ruby-service.yaml
+	# kubectl apply -f .kube/grpc-ruby.yaml
+	# kubectl apply -f .kube/grpc-ruby-service.yaml
 
 .PHONY: destroy
 destroy:
@@ -37,5 +39,7 @@ destroy:
 	kubectl delete service front-envoy-service
 	kubectl delete deployment go
 	kubectl delete service go-service
-	kubectl delete deployment go-ruby
-	kubectl delete service go-ruby-service
+	# kubectl delete deployment go-ruby
+	# kubectl delete service go-ruby-service
+	# kubectl delete deployment grpc-ruby
+	# kubectl delete service grpc-ruby-service

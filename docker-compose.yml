@@ -3,12 +3,18 @@ services:
   go:
     build: go
     ports:
-      - "50051:50051"
+      - "8080:8080"
     volumes:
       - ./go:/go/src/app
-  ruby:
-    build: ruby
-    ports:
-      - "4000:4000"
-    volumes:
-      - ./ruby:/app
+  # ruby:
+  #   build: ruby
+  #   ports:
+  #     - "4000:4000"
+  #   volumes:
+  #     - ./ruby:/app
+  # ruby_grpc:
+  #   build: ruby_grpc
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./ruby_grpc:/app
